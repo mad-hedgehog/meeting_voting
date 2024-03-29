@@ -6,12 +6,12 @@ class Button extends StatefulWidget {
     super.key,
     this.pressed = false,
     required this.child,
-    required this.onPressed,
+    required this.onTap,
   });
 
   final Widget child;
   final bool pressed;
-  final void Function() onPressed;
+  final void Function() onTap;
 
   @override
   State<Button> createState() => _ButtonState();
@@ -31,7 +31,7 @@ class _ButtonState extends State<Button> {
         onTapDown: _pressedDown,
         onTapUp: _pressedCancel,
         onTapCancel: _pressedCancel,
-        onTap: widget.onPressed,
+        onTap: widget.onTap,
         child: Container(
           padding: switch (widget.pressed) {
             true => const EdgeInsets.symmetric(horizontal: 7, vertical: 3),

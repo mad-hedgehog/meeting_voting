@@ -14,58 +14,94 @@ class CustomRadio<T> {
   String toString() => '$label, $value';
 }
 
-class RadioContainer extends StatefulWidget {
+class RadioContainer<T> extends StatefulWidget {
   const RadioContainer({
     super.key,
     required this.children,
+    this.wrap = false,
     this.multiple = false,
     required this.onChanged,
   });
 
-  final List<CustomRadio> children;
+  final List<CustomRadio<T>> children;
+  final bool wrap;
   final bool multiple;
-  final Function(List<dynamic> selected) onChanged;
+  final void Function(List<dynamic>) onChanged;
 
   @override
-  State<RadioContainer> createState() => _RadioContainerState();
+  State<RadioContainer> createState() => _RadioContainerState<T>();
 }
 
-class _RadioContainerState extends State<RadioContainer> {
-  final List<dynamic> _selectedList = [];
+class _RadioContainerState<T> extends State<RadioContainer> {
+  final _selectedList = <T>[];
 
   @override
-  Widget build(BuildContext context) {
-    return ListView.separated(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: widget.children.length,
-      itemBuilder: (context, index) {
-        final e = widget.children[index];
-        return Align(
-          alignment: Alignment.centerLeft,
-          child: Button(
-            onPressed: () {
-              setState(() {
-                if (widget.multiple) {
-                  if (_selectedList.contains(e)) {
-                    _selectedList.remove(e);
-                  } else {
-                    _selectedList.add(e);
-                  }
-                } else {
-                  _selectedList.clear();
-                  _selectedList.add(e);
-                }
-              });
+  Widget build(BuildContext context) => switch (widget.wrap) {
+        true => Wrap(
+            spacing: 6,
+            runSpacing: 6,
+            children: widget.children.map((e) {
+              return Button(
+                onTap: () {
+                  setState(() {
+                    if (widget.multiple) {
+                      if (_selectedList.contains(e.value)) {
+                        _selectedList.remove(e.value);
+                      } else {
+                        _selectedList.add(e.value);
+                      }
+                    } else {
+                      if (_selectedList.contains(e.value)) {
+                        _selectedList.clear();
+                      } else {
+                        _selectedList.clear();
+                        _selectedList.add(e.value);
+                      }
+                    }
+                  });
 
-              widget.onChanged(_selectedList);
-            },
-            pressed: _selectedList.contains(e),
-            child: Text(e.label),
+                  widget.onChanged.call(_selectedList);
+                },
+                pressed: _selectedList.contains(e.value),
+                child: Text(e.label),
+              );
+            }).toList(),
           ),
-        );
-      },
-      separatorBuilder: (context, index) => const SizedBox(height: 6),
-    );
-  }
+        false => ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: widget.children.length,
+            itemBuilder: (context, index) {
+              final e = widget.children[index];
+              return Align(
+                alignment: Alignment.centerLeft,
+                child: Button(
+                  onTap: () {
+                    setState(() {
+                      if (widget.multiple) {
+                        if (_selectedList.contains(e.value)) {
+                          _selectedList.remove(e.value);
+                        } else {
+                          _selectedList.add(e.value);
+                        }
+                      } else {
+                        if (_selectedList.contains(e.value)) {
+                          _selectedList.clear();
+                        } else {
+                          _selectedList.clear();
+                          _selectedList.add(e.value);
+                        }
+                      }
+                    });
+
+                    widget.onChanged.call(_selectedList);
+                  },
+                  pressed: _selectedList.contains(e.value),
+                  child: Text(e.label),
+                ),
+              );
+            },
+            separatorBuilder: (context, index) => const SizedBox(height: 6),
+          )
+      };
 }

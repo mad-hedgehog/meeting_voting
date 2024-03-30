@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meeting_voting/src/presentation/feature/main/main.dart';
+import 'package:meeting_voting/src/presentation/feature/main/view/main_page.dart';
 
 void main() {
   runApp(const MyApp());

@@ -1,44 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:meeting_voting/src/presentation/model/successful_record.dart';
-import 'package:pocketbase/pocketbase.dart';
+import 'package:meeting_voting/src/presentation/feature/record/provider/record_provider.dart';
 
-class RecordPage extends StatefulWidget {
+class RecordPage extends StatelessWidget {
   const RecordPage({super.key});
-
-  @override
-  State<RecordPage> createState() => _RecordPageState();
-}
-
-class _RecordPageState extends State<RecordPage> {
-  final List<SuccessfulRecord> _logs = [];
-  final pb = PocketBase('https://personal-pocketbase.5rj6sc.easypanel.host');
-
-  @override
-  void initState() {
-    super.initState();
-
-    _fetch();
-  }
-
-  void _fetch() async {
-    final records = await pb.collection('log').getFullList(
-          expand: 'participants, todo',
-        );
-
-    final logs = records.map((record) {
-      final name = record.expand['participants']?.first.data['name'];
-      final todos = List<String>.from(record.expand['todo']?.map((r) => r.data['title']) ?? []);
-      final dateTime = DateTime.parse(record.data['datetime']);
-
-      return SuccessfulRecord(name, todos, dateTime);
-    }).toList();
-
-    setState(() {
-      _logs.clear();
-      _logs.addAll(logs);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,26 +12,51 @@ class _RecordPageState extends State<RecordPage> {
       body: SafeArea(
         child: Column(
           children: [
-            Row(
-              children: [
-                const Spacer(),
-                IconButton(
-                  icon: const Icon(Icons.refresh),
-                  onPressed: _fetch,
-                ),
-              ],
-            ),
+            const SizedBox(height: 32),
             Expanded(
-              child: ListView.builder(
-                itemCount: _logs.length,
-                itemBuilder: (context, index) {
-                  final log = _logs[index];
+              child: Consumer(
+                builder: (context, ref, child) {
+                  final records = ref.watch(successfulRecordProvider);
 
-                  return ListTile(
-                    title: Text(log.name),
-                    subtitle: Text(log.todos.join(', ')),
-                    trailing: Text(DateFormat('MMM dd, yyyy').format(log.dateTime)),
-                  );
+                  return switch (records) {
+                    AsyncData(:final value) => ListView.separated(
+                        itemCount: value.length,
+                        itemBuilder: (context, index) {
+                          final log = value[index];
+
+                          return Row(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(log.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                                  Text(DateFormat('MMM dd, yyyy').format(log.dateTime)),
+                                ],
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Wrap(
+                                  spacing: 4,
+                                  runSpacing: 4,
+                                  children: log.todos.map((todo) {
+                                    return Chip(
+                                      label: Text(todo),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return const Divider(height: 32);
+                        },
+                      ),
+                    _ => const Center(child: CircularProgressIndicator()),
+                  };
                 },
               ),
             ),

@@ -26,6 +26,7 @@ class _DatePickerButtonState extends State<DatePickerButton> {
           firstDate: DateTime(2022),
           lastDate: DateTime.now(),
           currentDate: widget.dateTime,
+          initialEntryMode: DatePickerEntryMode.calendarOnly,
         );
 
         if (dateTime != null) {

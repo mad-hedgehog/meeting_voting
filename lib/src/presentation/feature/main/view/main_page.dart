@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:meeting_voting/src/presentation/feature/record/provider/record_provider.dart';
 import 'package:meeting_voting/src/presentation/feature/record/view/record_page.dart';
 import 'package:meeting_voting/src/presentation/feature/vote/view/vote_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MainPage extends ConsumerStatefulWidget {
   const MainPage({
@@ -66,6 +67,15 @@ class _MyHomePageState extends ConsumerState<MainPage> {
                         GoRouter.of(context).go('/record');
                       },
                       child: const Text('기록'),
+                    ),
+                    const Spacer(),
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (!await launchUrl(Uri.parse('https://personal-pocketbase.5rj6sc.easypanel.host/_')) && context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('관리 페이지로 이동할 수 없습니다.')));
+                        }
+                      },
+                      child: const Text('관리 페이지'),
                     ),
                   ],
                 ),

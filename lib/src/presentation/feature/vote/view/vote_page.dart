@@ -4,10 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:meeting_voting/src/presentation/common/provider.dart';
 import 'package:meeting_voting/src/presentation/component/date_picker_button.dart';
 import 'package:meeting_voting/src/presentation/component/radio_container.dart';
-import 'package:meeting_voting/src/presentation/feature/record/provider/record_provider.dart';
 import 'package:meeting_voting/src/presentation/feature/vote/component/submit_button.dart';
-import 'package:meeting_voting/src/presentation/model/participants.dart';
-import 'package:meeting_voting/src/presentation/model/todo.dart';
+import 'package:meeting_voting/src/presentation/feature/vote/provider/vote_provider.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 class VotePage extends ConsumerStatefulWidget {
@@ -23,9 +21,6 @@ class _VotePageState extends ConsumerState<VotePage> {
   DateTime _dateTime = DateTime.now();
   String? _participantsId;
   List<String> _todoIds = [];
-
-  List<Participants>? _participants;
-  List<Todo>? _todos;
 
   late final PocketBase pb;
 
@@ -52,25 +47,6 @@ class _VotePageState extends ConsumerState<VotePage> {
     super.initState();
 
     pb = ref.read(pocketBaseProvider);
-    _fetch();
-  }
-
-  void _fetch() async {
-    await Future.wait([_fetchParticipants(), _fetchTodos()]);
-
-    setState(() {});
-  }
-
-  Future _fetchParticipants() async {
-    final records = await pb.collection('participants').getFullList();
-
-    _participants = [...records.map((r) => Participants(r.id, r.data['name']))];
-  }
-
-  Future _fetchTodos() async {
-    final records = await pb.collection('todo').getFullList();
-
-    _todos = [...records.map((r) => Todo(r.id, r.data['title']))];
   }
 
   Future _postLog() async {
@@ -94,15 +70,13 @@ class _VotePageState extends ConsumerState<VotePage> {
 
     if (result == false) return;
 
-    final body = <String, dynamic>{
-      'participants': _participantsId,
-      'todo': [..._todoIds],
-      'datetime': _dateTime.toString(),
-    };
+    await ref.read(postVoteProvider(_participantsId!, _todoIds, _dateTime).future);
 
-    await pb.collection('log').create(body: body);
+    _dateTime = DateTime.now();
+    _participantsId = null;
+    _todoIds = [];
 
-    ref.invalidate(successfulRecordProvider);
+    setState(() {});
 
     if (mounted) {
       GoRouter.of(context).go('/record');
@@ -135,23 +109,41 @@ class _VotePageState extends ConsumerState<VotePage> {
                 const Divider(height: 64),
                 Text('누구세요?', style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(height: 8),
-                RadioContainer<String>(
-                  onChanged: _setName,
-                  wrap: true,
-                  children: [
-                    ...?_participants?.map((p) => CustomRadio(label: p.name, value: p.id)),
-                  ],
+                Consumer(
+                  builder: (context, ref, child) {
+                    final participants = ref.watch(participantsProvider);
+
+                    return switch (participants) {
+                      AsyncData(:final value) => RadioContainer<String>(
+                          onChanged: _setName,
+                          wrap: true,
+                          children: [
+                            ...value.map((p) => CustomRadio(label: p.name, value: p.id)),
+                          ],
+                        ),
+                      _ => const SizedBox(),
+                    };
+                  },
                 ),
                 const Divider(height: 64),
-                Text('오늘 성공한 일을 선택해주세요.', style: Theme.of(context).textTheme.titleMedium),
+                Text('오늘 성공한 일을 선택해 주세요.', style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(height: 8),
-                RadioContainer<String>(
-                  multiple: true,
-                  wrap: true,
-                  onChanged: _setSuccesses,
-                  children: [
-                    ...?_todos?.map((p) => CustomRadio(label: p.title, value: p.id)),
-                  ],
+                Consumer(
+                  builder: (context, ref, child) {
+                    final todos = ref.watch(todosProvider);
+
+                    return switch (todos) {
+                      AsyncData(:final value) => RadioContainer<String>(
+                          multiple: true,
+                          wrap: true,
+                          onChanged: _setSuccesses,
+                          children: [
+                            ...value.map((p) => CustomRadio(label: p.title, value: p.id)),
+                          ],
+                        ),
+                      _ => const SizedBox(),
+                    };
+                  },
                 ),
                 const SizedBox(height: 32),
                 SubmitButton(

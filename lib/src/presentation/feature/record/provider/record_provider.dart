@@ -28,7 +28,7 @@ Future<ResultList<RecordModel>> records(RecordsRef ref) async {
   final records = await pb.collection('log').getList(
         page: page,
         perPage: 10,
-        sort: '-datetime',
+        sort: '-datetime,created',
         expand: 'participants, todo',
       );
 
@@ -40,7 +40,7 @@ Future<List<SuccessfulRecord>> successfulRecord(SuccessfulRecordRef ref) async {
   final records = await ref.watch(recordsProvider.future);
 
   final logs = records.items.map((record) {
-    final name = record.expand['participants']?.first.data['name'];
+    final name = record.expand['participants']?.first.data['name'] ?? record.data['participants'];
     final todos = List<String>.from(record.expand['todo']?.map((r) => r.data['title']) ?? []);
     final dateTime = DateTime.parse(record.data['datetime']);
 

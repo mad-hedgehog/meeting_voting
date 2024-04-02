@@ -74,6 +74,16 @@ class Router extends _$Router {
             );
           },
         ),
+        GoRoute(
+          path: '/setting',
+          pageBuilder: (context, state) {
+            return buildPageWithFadeTransition(
+              context: context,
+              state: state,
+              child: const MainPage(path: 'setting'),
+            );
+          },
+        ),
       ],
     );
   }

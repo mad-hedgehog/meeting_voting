@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:meeting_voting/src/presentation/common/provider.dart';
 import 'package:meeting_voting/src/presentation/feature/record/provider/record_provider.dart';
 import 'package:meeting_voting/src/presentation/feature/record/view/record_page.dart';
+import 'package:meeting_voting/src/presentation/feature/setting/view/setting_page.dart';
 import 'package:meeting_voting/src/presentation/feature/vote/view/vote_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -40,6 +41,7 @@ class _MyHomePageState extends ConsumerState<MainPage> {
         _selectedIndex = switch (widget.path) {
           'vote' => 0,
           'record' => 1,
+          'setting' => 2,
           _ => 0,
         };
       });
@@ -69,6 +71,14 @@ class _MyHomePageState extends ConsumerState<MainPage> {
                       },
                       child: const Text('기록'),
                     ),
+                    const SizedBox(width: 16),
+                    TextButton(
+                      onPressed: () {
+                        ref.invalidate(recordsProvider);
+                        GoRouter.of(context).go('/setting');
+                      },
+                      child: const Text('설정'),
+                    ),
                     const Spacer(),
                     TextButton(
                       onPressed: () async {
@@ -78,15 +88,15 @@ class _MyHomePageState extends ConsumerState<MainPage> {
                           GoRouter.of(context).go('/login');
                         }
                       },
-                      child: const Text('logout'),
+                      child: const Text('Logout'),
                     ),
-                    ElevatedButton(
+                    IconButton(
                       onPressed: () async {
-                        if (!await launchUrl(Uri.parse('https://personal-pocketbase.5rj6sc.easypanel.host/_')) && context.mounted) {
+                        if (await launchUrl(Uri.parse('https://personal-pocketbase.5rj6sc.easypanel.host/_')) && context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('관리 페이지로 이동할 수 없습니다.')));
                         }
                       },
-                      child: const Text('관리 페이지'),
+                      icon: const Icon(Icons.admin_panel_settings_outlined),
                     ),
                   ],
                 ),
@@ -101,6 +111,7 @@ class _MyHomePageState extends ConsumerState<MainPage> {
                     children: const [
                       VotePage(),
                       RecordPage(),
+                      SettingPage(),
                     ],
                   ),
                 ),

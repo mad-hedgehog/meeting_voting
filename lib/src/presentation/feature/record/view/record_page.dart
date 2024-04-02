@@ -59,6 +59,7 @@ class RecordPage extends StatelessWidget {
                           },
                         ),
                       ),
+                    AsyncError(:final error) => Center(child: Text(error.toString())),
                     _ => const Center(child: CircularProgressIndicator()),
                   };
                 },

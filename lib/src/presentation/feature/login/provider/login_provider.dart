@@ -20,4 +20,8 @@ Future<void> login(LoginRef ref, String userName, String password) async {
   final pb = ref.read(pocketBaseProvider);
 
   await pb.collection('users').authWithPassword(userName, password);
+
+  if (pb.authStore.isValid) {
+    ref.read(writeTokenProvider(pb.authStore.token));
+  }
 }

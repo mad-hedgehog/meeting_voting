@@ -13,12 +13,28 @@ class Router extends _$Router {
   GoRouter build() {
     return GoRouter(
       initialLocation: '/login',
-      redirect: (context, state) {
-        if (ref.read(pocketBaseProvider).authStore.isValid == false) {
+      redirect: (context, state) async {
+        if (ref.read(isAuthProvider)) {
+          return '/vote';
+        }
+
+        final token = await ref.read(readTokenProvider.future);
+
+        if (token == null) {
           return '/login';
         }
 
-        return null;
+        try {
+          await ref.read(verificationProvider(token).future);
+        } catch (e) {
+          await ref.read(deleteTokenProvider.future);
+        }
+
+        if (ref.read(isAuthProvider)) {
+          return '/vote';
+        }
+
+        return '/login';
       },
       routes: [
         GoRoute(

@@ -20,7 +20,7 @@ final usersProvider = AutoDisposeFutureProvider<List<User>>.internal(
 );
 
 typedef UsersRef = AutoDisposeFutureProviderRef<List<User>>;
-String _$loginHash() => r'9a254fee0d35da7d48a854b009f7495caca0dc61';
+String _$loginHash() => r'fd12396928fa461422f4be21d04f0ac62f76d591';
 
 /// Copied from Dart SDK
 class _SystemHash {

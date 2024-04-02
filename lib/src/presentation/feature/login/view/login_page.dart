@@ -85,6 +85,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       try {
                         await ref.read(loginProvider(userName, password).future);
                       } catch (e) {
+                        _controller.clear();
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -93,6 +94,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             ),
                           );
                         }
+                        _focusNode.requestFocus();
                       }
 
                       if (ref.read(pocketBaseProvider).authStore.isValid && context.mounted) {

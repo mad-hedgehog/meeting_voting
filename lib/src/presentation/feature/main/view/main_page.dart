@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meeting_voting/src/presentation/common/provider.dart';
 import 'package:meeting_voting/src/presentation/feature/record/provider/record_provider.dart';
 import 'package:meeting_voting/src/presentation/feature/record/view/record_page.dart';
 import 'package:meeting_voting/src/presentation/feature/vote/view/vote_page.dart';
@@ -69,6 +70,16 @@ class _MyHomePageState extends ConsumerState<MainPage> {
                       child: const Text('기록'),
                     ),
                     const Spacer(),
+                    TextButton(
+                      onPressed: () async {
+                        ref.read(logoutProvider);
+                        await ref.read(deleteTokenProvider.future);
+                        if (context.mounted) {
+                          GoRouter.of(context).go('/login');
+                        }
+                      },
+                      child: const Text('logout'),
+                    ),
                     ElevatedButton(
                       onPressed: () async {
                         if (!await launchUrl(Uri.parse('https://personal-pocketbase.5rj6sc.easypanel.host/_')) && context.mounted) {

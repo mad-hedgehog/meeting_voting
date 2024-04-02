@@ -34,7 +34,21 @@ final isAuthProvider = AutoDisposeProvider<bool>.internal(
 );
 
 typedef IsAuthRef = AutoDisposeProviderRef<bool>;
-String _$verificationHash() => r'8e5bf491977e59f77fcabbdb0b7f4fe957d77811';
+String _$logoutHash() => r'6453b558bd7141149c5ec33a067b0c77a36ef80a';
+
+/// See also [logout].
+@ProviderFor(logout)
+final logoutProvider = AutoDisposeFutureProvider<void>.internal(
+  logout,
+  name: r'logoutProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$logoutHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef LogoutRef = AutoDisposeFutureProviderRef<void>;
+String _$verificationHash() => r'4cdc389cb9676979173b77724195d2c0cb4ccbd5';
 
 /// Copied from Dart SDK
 class _SystemHash {

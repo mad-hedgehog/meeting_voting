@@ -13,6 +13,13 @@ PocketBase pocketBase(PocketBaseRef ref) => PocketBase('https://personal-pocketb
 bool isAuth(IsAuthRef ref) => ref.read(pocketBaseProvider).authStore.isValid;
 
 @riverpod
+Future<void> logout(LogoutRef ref) async {
+  final pb = ref.read(pocketBaseProvider);
+
+  pb.authStore.clear();
+}
+
+@riverpod
 Future<void> verification(VerificationRef ref, String token) async {
   final pb = ref.read(pocketBaseProvider);
 

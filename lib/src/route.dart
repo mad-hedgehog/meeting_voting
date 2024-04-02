@@ -15,7 +15,7 @@ class Router extends _$Router {
       initialLocation: '/login',
       redirect: (context, state) async {
         if (ref.read(isAuthProvider)) {
-          return '/vote';
+          return null;
         }
 
         final token = await ref.read(readTokenProvider.future);
@@ -31,7 +31,7 @@ class Router extends _$Router {
         }
 
         if (ref.read(isAuthProvider)) {
-          return '/vote';
+          return null;
         }
 
         return '/login';
@@ -39,6 +39,13 @@ class Router extends _$Router {
       routes: [
         GoRoute(
           path: '/login',
+          redirect: (context, state) {
+            if (ref.read(isAuthProvider)) {
+              return '/vote';
+            }
+
+            return null;
+          },
           pageBuilder: (context, state) {
             return buildPageWithFadeTransition(
               context: context,

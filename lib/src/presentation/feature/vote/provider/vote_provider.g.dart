@@ -6,21 +6,6 @@ part of 'vote_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$participantsHash() => r'44dc358b1e15243a5f0d2a0b33c374c75c26f37e';
-
-/// See also [participants].
-@ProviderFor(participants)
-final participantsProvider =
-    AutoDisposeFutureProvider<List<Participants>>.internal(
-  participants,
-  name: r'participantsProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$participantsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef ParticipantsRef = AutoDisposeFutureProviderRef<List<Participants>>;
 String _$todosHash() => r'354334e46e1ebdff413103dd3b8e3ac75b4502e1';
 
 /// See also [todos].
@@ -35,7 +20,7 @@ final todosProvider = AutoDisposeFutureProvider<List<Todo>>.internal(
 );
 
 typedef TodosRef = AutoDisposeFutureProviderRef<List<Todo>>;
-String _$postVoteHash() => r'0d696583ebd6b8693dd2f7435c39a01d68dfc6cf';
+String _$postVoteHash() => r'cc7bfd260ebbde2964ecfa256e9cd74104702494';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -69,12 +54,10 @@ class PostVoteFamily extends Family<AsyncValue<void>> {
 
   /// See also [postVote].
   PostVoteProvider call(
-    String participantsId,
     List<String> todoIds,
     DateTime dateTime,
   ) {
     return PostVoteProvider(
-      participantsId,
       todoIds,
       dateTime,
     );
@@ -85,7 +68,6 @@ class PostVoteFamily extends Family<AsyncValue<void>> {
     covariant PostVoteProvider provider,
   ) {
     return call(
-      provider.participantsId,
       provider.todoIds,
       provider.dateTime,
     );
@@ -110,13 +92,11 @@ class PostVoteFamily extends Family<AsyncValue<void>> {
 class PostVoteProvider extends AutoDisposeFutureProvider<void> {
   /// See also [postVote].
   PostVoteProvider(
-    String participantsId,
     List<String> todoIds,
     DateTime dateTime,
   ) : this._internal(
           (ref) => postVote(
             ref as PostVoteRef,
-            participantsId,
             todoIds,
             dateTime,
           ),
@@ -128,7 +108,6 @@ class PostVoteProvider extends AutoDisposeFutureProvider<void> {
                   : _$postVoteHash,
           dependencies: PostVoteFamily._dependencies,
           allTransitiveDependencies: PostVoteFamily._allTransitiveDependencies,
-          participantsId: participantsId,
           todoIds: todoIds,
           dateTime: dateTime,
         );
@@ -140,12 +119,10 @@ class PostVoteProvider extends AutoDisposeFutureProvider<void> {
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.participantsId,
     required this.todoIds,
     required this.dateTime,
   }) : super.internal();
 
-  final String participantsId;
   final List<String> todoIds;
   final DateTime dateTime;
 
@@ -162,7 +139,6 @@ class PostVoteProvider extends AutoDisposeFutureProvider<void> {
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        participantsId: participantsId,
         todoIds: todoIds,
         dateTime: dateTime,
       ),
@@ -177,7 +153,6 @@ class PostVoteProvider extends AutoDisposeFutureProvider<void> {
   @override
   bool operator ==(Object other) {
     return other is PostVoteProvider &&
-        other.participantsId == participantsId &&
         other.todoIds == todoIds &&
         other.dateTime == dateTime;
   }
@@ -185,7 +160,6 @@ class PostVoteProvider extends AutoDisposeFutureProvider<void> {
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, participantsId.hashCode);
     hash = _SystemHash.combine(hash, todoIds.hashCode);
     hash = _SystemHash.combine(hash, dateTime.hashCode);
 
@@ -194,9 +168,6 @@ class PostVoteProvider extends AutoDisposeFutureProvider<void> {
 }
 
 mixin PostVoteRef on AutoDisposeFutureProviderRef<void> {
-  /// The parameter `participantsId` of this provider.
-  String get participantsId;
-
   /// The parameter `todoIds` of this provider.
   List<String> get todoIds;
 
@@ -208,8 +179,6 @@ class _PostVoteProviderElement extends AutoDisposeFutureProviderElement<void>
     with PostVoteRef {
   _PostVoteProviderElement(super.provider);
 
-  @override
-  String get participantsId => (origin as PostVoteProvider).participantsId;
   @override
   List<String> get todoIds => (origin as PostVoteProvider).todoIds;
   @override

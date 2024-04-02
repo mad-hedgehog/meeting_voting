@@ -64,7 +64,7 @@ class _MyHomePageState extends ConsumerState<MainPage> {
                     const SizedBox(width: 16),
                     TextButton(
                       onPressed: () {
-                        ref.invalidate(successfulRecordProvider);
+                        ref.invalidate(recordsProvider);
                         GoRouter.of(context).go('/record');
                       },
                       child: const Text('기록'),

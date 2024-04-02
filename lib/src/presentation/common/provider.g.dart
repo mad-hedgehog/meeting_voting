@@ -20,6 +20,20 @@ final pocketBaseProvider = Provider<PocketBase>.internal(
 );
 
 typedef PocketBaseRef = ProviderRef<PocketBase>;
+String _$recordModelHash() => r'8e2b715c6cd4a524605e4a42142fddfe1ccfd1f3';
+
+/// See also [recordModel].
+@ProviderFor(recordModel)
+final recordModelProvider = AutoDisposeProvider<RecordModel>.internal(
+  recordModel,
+  name: r'recordModelProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$recordModelHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef RecordModelRef = AutoDisposeProviderRef<RecordModel>;
 String _$isAuthHash() => r'268ad4af1043ac20eeed8a761c9aef87df11fa9e';
 
 /// See also [isAuth].

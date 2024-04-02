@@ -55,14 +55,22 @@ class Router extends _$Router {
           },
         ),
         GoRoute(
-          path: '/:path',
+          path: '/vote',
           pageBuilder: (context, state) {
-            final path = state.pathParameters['path'];
-
             return buildPageWithFadeTransition(
               context: context,
               state: state,
-              child: MainPage(path: path),
+              child: const MainPage(path: 'vote'),
+            );
+          },
+        ),
+        GoRoute(
+          path: '/record',
+          pageBuilder: (context, state) {
+            return buildPageWithFadeTransition(
+              context: context,
+              state: state,
+              child: const MainPage(path: 'record'),
             );
           },
         ),

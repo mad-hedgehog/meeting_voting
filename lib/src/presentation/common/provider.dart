@@ -10,6 +10,12 @@ const tokenUUID = 'b978dc7b-4432-4f29-9014-16cdcaec3888';
 PocketBase pocketBase(PocketBaseRef ref) => PocketBase('https://personal-pocketbase.5rj6sc.easypanel.host');
 
 @riverpod
+RecordModel recordModel(RecordModelRef ref) {
+  final pb = ref.read(pocketBaseProvider);
+  return pb.authStore.model as RecordModel;
+}
+
+@riverpod
 bool isAuth(IsAuthRef ref) => ref.read(pocketBaseProvider).authStore.isValid;
 
 @riverpod

@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:meeting_voting/src/presentation/common/provider.dart';
 import 'package:meeting_voting/src/presentation/component/date_picker_button.dart';
 import 'package:meeting_voting/src/presentation/component/radio_container.dart';
+import 'package:meeting_voting/src/presentation/feature/record/provider/record_provider.dart';
 import 'package:meeting_voting/src/presentation/feature/vote/component/submit_button.dart';
 import 'package:meeting_voting/src/presentation/feature/vote/provider/vote_provider.dart';
-import 'package:pocketbase/pocketbase.dart';
 
 class VotePage extends ConsumerStatefulWidget {
   const VotePage({super.key});
@@ -19,34 +19,11 @@ class _VotePageState extends ConsumerState<VotePage> {
   final ScrollController _controller = ScrollController();
 
   DateTime _dateTime = DateTime.now();
-  String? _participantsId;
   List<String> _todoIds = [];
-
-  late final PocketBase pb;
-
-  void _setName(List<dynamic> names) {
-    if (names is List<String> == false) return;
-    if (names.isEmpty) {
-      setState(() {
-        _participantsId = null;
-      });
-    } else {
-      setState(() {
-        _participantsId = names.first;
-      });
-    }
-  }
 
   void _setSuccesses(List<dynamic> values) {
     if (values is List<String> == false) return;
     _todoIds = List<String>.from(values);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    pb = ref.read(pocketBaseProvider);
   }
 
   Future _postLog() async {
@@ -70,15 +47,10 @@ class _VotePageState extends ConsumerState<VotePage> {
 
     if (result == false) return;
 
-    await ref.read(postVoteProvider(_participantsId!, _todoIds, _dateTime).future);
-
-    _dateTime = DateTime.now();
-    _participantsId = null;
-    _todoIds = [];
-
-    setState(() {});
+    await ref.read(postVoteProvider(_todoIds, _dateTime).future);
 
     if (mounted) {
+      ref.invalidate(recordsProvider);
       GoRouter.of(context).go('/record');
     }
   }
@@ -107,22 +79,12 @@ class _VotePageState extends ConsumerState<VotePage> {
                   },
                 ),
                 const Divider(height: 64),
-                Text('누구세요?', style: Theme.of(context).textTheme.titleMedium),
-                const SizedBox(height: 8),
                 Consumer(
-                  builder: (context, ref, child) {
-                    final participants = ref.watch(participantsProvider);
+                  builder: (context, ref, _) {
+                    final model = ref.read(recordModelProvider);
+                    final name = model.data['name'];
 
-                    return switch (participants) {
-                      AsyncData(:final value) => RadioContainer<String>(
-                          onChanged: _setName,
-                          wrap: true,
-                          children: [
-                            ...value.map((p) => CustomRadio(label: p.name, value: p.id)),
-                          ],
-                        ),
-                      _ => const SizedBox(),
-                    };
+                    return Text('안녕하세요. $name님', style: Theme.of(context).textTheme.titleMedium);
                   },
                 ),
                 const Divider(height: 64),
@@ -146,12 +108,7 @@ class _VotePageState extends ConsumerState<VotePage> {
                   },
                 ),
                 const SizedBox(height: 32),
-                SubmitButton(
-                  onPressed: switch (_participantsId) {
-                    null => null,
-                    _ => _postLog,
-                  },
-                ),
+                SubmitButton(onPressed: _postLog),
                 const SizedBox(height: 64),
               ],
             ),

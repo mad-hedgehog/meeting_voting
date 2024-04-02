@@ -6,11 +6,11 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$pocketBaseHash() => r'4b79aea96e8b33867a384fd462e3512328195293';
+String _$pocketBaseHash() => r'75e30fe5b61560052b90e3402a779af684eab0c6';
 
 /// See also [pocketBase].
 @ProviderFor(pocketBase)
-final pocketBaseProvider = AutoDisposeProvider<PocketBase>.internal(
+final pocketBaseProvider = Provider<PocketBase>.internal(
   pocketBase,
   name: r'pocketBaseProvider',
   debugGetCreateSourceHash:
@@ -19,6 +19,6 @@ final pocketBaseProvider = AutoDisposeProvider<PocketBase>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef PocketBaseRef = AutoDisposeProviderRef<PocketBase>;
+typedef PocketBaseRef = ProviderRef<PocketBase>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

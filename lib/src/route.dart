@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meeting_voting/src/presentation/common/provider.dart';
+import 'package:meeting_voting/src/presentation/feature/login/view/login_page.dart';
 import 'package:meeting_voting/src/presentation/feature/main/view/main_page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -10,8 +12,25 @@ class Router extends _$Router {
   @override
   GoRouter build() {
     return GoRouter(
-      initialLocation: '/vote',
+      initialLocation: '/login',
+      redirect: (context, state) {
+        if (ref.read(pocketBaseProvider).authStore.isValid == false) {
+          return '/login';
+        }
+
+        return null;
+      },
       routes: [
+        GoRoute(
+          path: '/login',
+          pageBuilder: (context, state) {
+            return buildPageWithFadeTransition(
+              context: context,
+              state: state,
+              child: const LoginPage(),
+            );
+          },
+        ),
         GoRoute(
           path: '/:path',
           pageBuilder: (context, state) {

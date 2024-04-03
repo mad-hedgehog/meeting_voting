@@ -21,31 +21,6 @@ class MainPage extends ConsumerStatefulWidget {
 }
 
 class _MyHomePageState extends ConsumerState<MainPage> {
-  int _selectedIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _onChangedPath();
-  }
-
-  @override
-  void didUpdateWidget(covariant MainPage oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    _onChangedPath();
-  }
-
-  void _onChangedPath() => setState(() {
-        _selectedIndex = switch (widget.path) {
-          'vote' => 0,
-          'record' => 1,
-          'setting' => 2,
-          _ => 0,
-        };
-      });
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +38,7 @@ class _MyHomePageState extends ConsumerState<MainPage> {
                       onPressed: () => GoRouter.of(context).go('/vote'),
                       child: const Text('투표'),
                     ),
-                    const SizedBox(width: 16),
+                    const SizedBox(width: 4),
                     TextButton(
                       onPressed: () {
                         ref.invalidate(recordsProvider);
@@ -71,10 +46,9 @@ class _MyHomePageState extends ConsumerState<MainPage> {
                       },
                       child: const Text('기록'),
                     ),
-                    const SizedBox(width: 16),
+                    const SizedBox(width: 4),
                     TextButton(
                       onPressed: () {
-                        ref.invalidate(recordsProvider);
                         GoRouter.of(context).go('/setting');
                       },
                       child: const Text('설정'),
@@ -106,14 +80,12 @@ class _MyHomePageState extends ConsumerState<MainPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   constraints: const BoxConstraints(maxWidth: 640),
                   height: double.infinity,
-                  child: IndexedStack(
-                    index: _selectedIndex,
-                    children: const [
-                      VotePage(),
-                      RecordPage(),
-                      SettingPage(),
-                    ],
-                  ),
+                  child: switch (widget.path) {
+                    'vote' => const VotePage(),
+                    'record' => const RecordPage(),
+                    'setting' => const SettingPage(),
+                    _ => const VotePage(),
+                  },
                 ),
               ),
             ],

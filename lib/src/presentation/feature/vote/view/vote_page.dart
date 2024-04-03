@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -68,17 +70,6 @@ class _VotePageState extends ConsumerState<VotePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 32),
-                Text('살 빼면 난리나는 모임 투표', style: Theme.of(context).textTheme.titleLarge),
-                const SizedBox(height: 16),
-                DatePickerButton(
-                  dateTime: _dateTime,
-                  onChanged: (date) {
-                    setState(() {
-                      _dateTime = date;
-                    });
-                  },
-                ),
-                const Divider(height: 64),
                 Consumer(
                   builder: (context, ref, _) {
                     final model = ref.read(recordModelProvider);
@@ -87,7 +78,18 @@ class _VotePageState extends ConsumerState<VotePage> {
                     return Text('안녕하세요. $name님', style: Theme.of(context).textTheme.titleMedium);
                   },
                 ),
-                const Divider(height: 64),
+                const Divider(height: 48),
+                Text('날짜를 선택해 주세요.', style: Theme.of(context).textTheme.titleMedium),
+                const SizedBox(height: 8),
+                DatePickerButton(
+                  dateTime: _dateTime,
+                  onChanged: (date) {
+                    setState(() {
+                      _dateTime = date;
+                    });
+                  },
+                ),
+                const Divider(height: 48),
                 Text('오늘 성공한 일을 선택해 주세요.', style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(height: 8),
                 Consumer(

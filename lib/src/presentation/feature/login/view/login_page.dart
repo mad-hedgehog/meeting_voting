@@ -78,6 +78,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     length: 6,
                     focusNode: _focusNode,
                     controller: _controller,
+                    keyboardType: TextInputType.number,
+                    obscureText: true,
+                    obscuringCharacter: '*',
                     onCompleted: (password) async {
                       final userName = (await ref.read(usersProvider.future)).firstWhere((user) => user.id == _selectedId).userName;
 

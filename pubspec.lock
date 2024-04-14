@@ -941,6 +941,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.4"
+  widget_tooltip:
+    dependency: "direct main"
+    description:
+      name: widget_tooltip
+      sha256: "0901c805b22f7a69af8ef1decda94802b582616a06061c840bdbaec83667bd25"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   win32:
     dependency: transitive
     description:

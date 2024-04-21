@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meeting_voting/src/core/color_system.dart';
 import 'package:meeting_voting/src/core/text_system.dart';
 import 'package:meeting_voting/src/presentation/component/button/button.dart';
@@ -29,12 +30,12 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
 
   @override
   void dispose() {
-    super.dispose();
-
     _nicknameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -181,10 +182,12 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                               _emailController.clear();
                             }
                           } else {
-                            ref.read(loginProvider(
+                            await ref.read(loginProvider(
                               _emailController.text,
                               _passwordController.text,
                             ).future);
+
+                            if (context.mounted) context.go('/vote');
                           }
                         },
                       ),

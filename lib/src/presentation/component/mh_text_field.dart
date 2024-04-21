@@ -131,7 +131,10 @@ class _MHTextFieldState extends State<MHTextField> {
                     }),
                     child: Padding(
                       padding: const EdgeInsets.only(right: 18.0),
-                      child: SvgPicture.asset(visibleIcon ? Svgs.eyeVisible : Svgs.eyeInvisible),
+                      child: SvgPicture.asset(
+                        visibleIcon ? Svgs.eyeVisible : Svgs.eyeInvisible,
+                        colorFilter: ColorFilter.mode(colorSystem.highlight.medium, BlendMode.srcIn),
+                      ),
                     ),
                   ),
                 ),

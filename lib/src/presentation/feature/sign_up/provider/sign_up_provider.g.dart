@@ -1,26 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'login_provider.dart';
+part of 'sign_up_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$usersHash() => r'caa9a7c9f97d92090e038c138ff35477536d5b2f';
-
-/// See also [users].
-@ProviderFor(users)
-final usersProvider = AutoDisposeFutureProvider<List<User>>.internal(
-  users,
-  name: r'usersProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$usersHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef UsersRef = AutoDisposeFutureProviderRef<List<User>>;
-String _$loginHash() => r'0defbe417b7711727ca33c7970613bc078e5ef8e';
+String _$signUpHash() => r'4f1e3e7a223c94fe5940b237410bd90973596f30';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -43,33 +29,36 @@ class _SystemHash {
   }
 }
 
-/// See also [login].
-@ProviderFor(login)
-const loginProvider = LoginFamily();
+/// See also [signUp].
+@ProviderFor(signUp)
+const signUpProvider = SignUpFamily();
 
-/// See also [login].
-class LoginFamily extends Family<AsyncValue<bool>> {
-  /// See also [login].
-  const LoginFamily();
+/// See also [signUp].
+class SignUpFamily extends Family<AsyncValue<dynamic>> {
+  /// See also [signUp].
+  const SignUpFamily();
 
-  /// See also [login].
-  LoginProvider call(
-    String email,
-    String password,
-  ) {
-    return LoginProvider(
-      email,
-      password,
+  /// See also [signUp].
+  SignUpProvider call({
+    required String nickname,
+    required String email,
+    required String password,
+  }) {
+    return SignUpProvider(
+      nickname: nickname,
+      email: email,
+      password: password,
     );
   }
 
   @override
-  LoginProvider getProviderOverride(
-    covariant LoginProvider provider,
+  SignUpProvider getProviderOverride(
+    covariant SignUpProvider provider,
   ) {
     return call(
-      provider.email,
-      provider.password,
+      nickname: provider.nickname,
+      email: provider.email,
+      password: provider.password,
     );
   }
 
@@ -85,60 +74,66 @@ class LoginFamily extends Family<AsyncValue<bool>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'loginProvider';
+  String? get name => r'signUpProvider';
 }
 
-/// See also [login].
-class LoginProvider extends AutoDisposeFutureProvider<bool> {
-  /// See also [login].
-  LoginProvider(
-    String email,
-    String password,
-  ) : this._internal(
-          (ref) => login(
-            ref as LoginRef,
-            email,
-            password,
+/// See also [signUp].
+class SignUpProvider extends AutoDisposeFutureProvider<dynamic> {
+  /// See also [signUp].
+  SignUpProvider({
+    required String nickname,
+    required String email,
+    required String password,
+  }) : this._internal(
+          (ref) => signUp(
+            ref as SignUpRef,
+            nickname: nickname,
+            email: email,
+            password: password,
           ),
-          from: loginProvider,
-          name: r'loginProvider',
+          from: signUpProvider,
+          name: r'signUpProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$loginHash,
-          dependencies: LoginFamily._dependencies,
-          allTransitiveDependencies: LoginFamily._allTransitiveDependencies,
+                  : _$signUpHash,
+          dependencies: SignUpFamily._dependencies,
+          allTransitiveDependencies: SignUpFamily._allTransitiveDependencies,
+          nickname: nickname,
           email: email,
           password: password,
         );
 
-  LoginProvider._internal(
+  SignUpProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
+    required this.nickname,
     required this.email,
     required this.password,
   }) : super.internal();
 
+  final String nickname;
   final String email;
   final String password;
 
   @override
   Override overrideWith(
-    FutureOr<bool> Function(LoginRef provider) create,
+    FutureOr<dynamic> Function(SignUpRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: LoginProvider._internal(
-        (ref) => create(ref as LoginRef),
+      override: SignUpProvider._internal(
+        (ref) => create(ref as SignUpRef),
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
+        nickname: nickname,
         email: email,
         password: password,
       ),
@@ -146,13 +141,14 @@ class LoginProvider extends AutoDisposeFutureProvider<bool> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<bool> createElement() {
-    return _LoginProviderElement(this);
+  AutoDisposeFutureProviderElement<dynamic> createElement() {
+    return _SignUpProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is LoginProvider &&
+    return other is SignUpProvider &&
+        other.nickname == nickname &&
         other.email == email &&
         other.password == password;
   }
@@ -160,6 +156,7 @@ class LoginProvider extends AutoDisposeFutureProvider<bool> {
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, nickname.hashCode);
     hash = _SystemHash.combine(hash, email.hashCode);
     hash = _SystemHash.combine(hash, password.hashCode);
 
@@ -167,7 +164,10 @@ class LoginProvider extends AutoDisposeFutureProvider<bool> {
   }
 }
 
-mixin LoginRef on AutoDisposeFutureProviderRef<bool> {
+mixin SignUpRef on AutoDisposeFutureProviderRef<dynamic> {
+  /// The parameter `nickname` of this provider.
+  String get nickname;
+
   /// The parameter `email` of this provider.
   String get email;
 
@@ -175,14 +175,16 @@ mixin LoginRef on AutoDisposeFutureProviderRef<bool> {
   String get password;
 }
 
-class _LoginProviderElement extends AutoDisposeFutureProviderElement<bool>
-    with LoginRef {
-  _LoginProviderElement(super.provider);
+class _SignUpProviderElement extends AutoDisposeFutureProviderElement<dynamic>
+    with SignUpRef {
+  _SignUpProviderElement(super.provider);
 
   @override
-  String get email => (origin as LoginProvider).email;
+  String get nickname => (origin as SignUpProvider).nickname;
   @override
-  String get password => (origin as LoginProvider).password;
+  String get email => (origin as SignUpProvider).email;
+  @override
+  String get password => (origin as SignUpProvider).password;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

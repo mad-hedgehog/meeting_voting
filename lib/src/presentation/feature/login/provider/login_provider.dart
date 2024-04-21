@@ -1,5 +1,6 @@
 import 'package:meeting_voting/src/presentation/common/provider.dart';
 import 'package:meeting_voting/src/presentation/model/user.dart';
+import 'package:pocketbase/pocketbase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'login_provider.g.dart';
@@ -16,12 +17,16 @@ Future<List<User>> users(UsersRef ref) async {
 }
 
 @riverpod
-Future<void> login(LoginRef ref, String email, String password) async {
+Future<bool> login(LoginRef ref, String email, String password) async {
   final pb = ref.read(pocketBaseProvider);
 
-  await pb.collection('users').authWithPassword(email, password);
+  try {
+    await pb.collection('users').authWithPassword(email, password);
 
-  if (pb.authStore.isValid) {
     ref.read(writeTokenProvider(pb.authStore.token));
+
+    return true;
+  } on ClientException catch (e) {
+    return false;
   }
 }

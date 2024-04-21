@@ -42,6 +42,7 @@ class Router extends _$Router {
       routes: [
         GoRoute(
           path: '/login',
+          name: LoginPage.routeName,
           redirect: (context, state) {
             if (ref.read(isAuthProvider)) {
               return '/vote';

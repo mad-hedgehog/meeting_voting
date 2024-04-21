@@ -96,6 +96,7 @@ class _MHTextFieldState extends State<MHTextField> {
           maxLines: 1,
           focusNode: _focusNode,
           obscureText: widget.obscureText && visibleIcon == false,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           style: textSystem.body.m.copyWith(fontWeight: FontWeight.w500),
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(

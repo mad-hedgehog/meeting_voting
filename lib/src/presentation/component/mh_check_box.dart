@@ -51,7 +51,10 @@ class MHCheckBox extends FormField<bool> {
 
   static Widget build(FormFieldState<bool?> state, {required bool checked, required VoidCallback onTap, required double size, required double padding}) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        onTap();
+        state.didChange(!checked);
+      },
       child: Container(
         width: size,
         height: size,

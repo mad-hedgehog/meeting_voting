@@ -16,10 +16,10 @@ Future<List<User>> users(UsersRef ref) async {
 }
 
 @riverpod
-Future<void> login(LoginRef ref, String userName, String password) async {
+Future<void> login(LoginRef ref, String email, String password) async {
   final pb = ref.read(pocketBaseProvider);
 
-  await pb.collection('users').authWithPassword(userName, password);
+  await pb.collection('users').authWithPassword(email, password);
 
   if (pb.authStore.isValid) {
     ref.read(writeTokenProvider(pb.authStore.token));

@@ -22,7 +22,7 @@ final totalRecordPageNumberProvider = AutoDisposeFutureProvider<int>.internal(
 );
 
 typedef TotalRecordPageNumberRef = AutoDisposeFutureProviderRef<int>;
-String _$recordsHash() => r'1b0386c88cd36445f5d7d52e2907e4c00a7c7d8c';
+String _$recordsHash() => r'4634cff9a135b7431cc5e3bdda5b7ff0cb695e9c';
 
 /// See also [records].
 @ProviderFor(records)
@@ -37,7 +37,7 @@ final recordsProvider =
 );
 
 typedef RecordsRef = AutoDisposeFutureProviderRef<ResultList<RecordModel>>;
-String _$successfulRecordHash() => r'15afce78f28889c48db6c0f245174561fbb76356';
+String _$successfulRecordHash() => r'70697af3c06c8a66977244a2a00c3690ea2dc4c8';
 
 /// See also [successfulRecord].
 @ProviderFor(successfulRecord)

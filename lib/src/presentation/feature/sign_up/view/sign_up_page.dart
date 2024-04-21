@@ -1,22 +1,25 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:meeting_voting/src/core/color_system.dart';
 import 'package:meeting_voting/src/core/text_system.dart';
 import 'package:meeting_voting/src/presentation/component/button/button.dart';
 import 'package:meeting_voting/src/presentation/component/mh_check_box.dart';
 import 'package:meeting_voting/src/presentation/component/mh_text_field.dart';
+import 'package:meeting_voting/src/presentation/feature/login/provider/login_provider.dart';
+import 'package:meeting_voting/src/presentation/feature/sign_up/provider/sign_up_provider.dart';
 
-class SignUpPage extends StatefulWidget {
+class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({super.key});
 
   static const routeName = 'SignUpPageRouteName';
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  ConsumerState<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignUpPageState extends ConsumerState<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nicknameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -161,8 +164,28 @@ class _SignUpPageState extends State<SignUpPage> {
                         expand: true,
                         height: 48,
                         child: const Text('회원가입'),
-                        onTap: () {
-                          _formKey.currentState?.validate();
+                        onTap: () async {
+                          if (_formKey.currentState?.validate() == false) return;
+
+                          final response = await ref.read(signUpProvider(
+                            nickname: _nicknameController.text,
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          ).future);
+
+                          if (response is Map<String, dynamic>) {
+                            if (response.containsKey('nickname')) {
+                              _nicknameController.clear();
+                            }
+                            if (response.containsKey('email')) {
+                              _emailController.clear();
+                            }
+                          } else {
+                            ref.read(loginProvider(
+                              _emailController.text,
+                              _passwordController.text,
+                            ).future);
+                          }
                         },
                       ),
                     ),

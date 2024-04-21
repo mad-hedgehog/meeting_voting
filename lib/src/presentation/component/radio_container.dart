@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meeting_voting/src/presentation/component/button.dart';
+import 'package:meeting_voting/src/presentation/component/button/button.dart';
 
 class CustomRadio<T> {
   CustomRadio({
@@ -41,7 +41,7 @@ class _RadioContainerState<T> extends State<RadioContainer> {
             spacing: 6,
             runSpacing: 6,
             children: widget.children.map((e) {
-              return Button(
+              return Button.primary(
                 onTap: () {
                   setState(() {
                     if (widget.multiple) {
@@ -62,7 +62,7 @@ class _RadioContainerState<T> extends State<RadioContainer> {
 
                   widget.onChanged.call(_selectedList);
                 },
-                pressed: _selectedList.contains(e.value),
+                // pressed: _selectedList.contains(e.value),
                 child: Text(e.label),
               );
             }).toList(),
@@ -75,7 +75,7 @@ class _RadioContainerState<T> extends State<RadioContainer> {
               final e = widget.children[index];
               return Align(
                 alignment: Alignment.centerLeft,
-                child: Button(
+                child: Button.primary(
                   onTap: () {
                     setState(() {
                       if (widget.multiple) {
@@ -96,7 +96,7 @@ class _RadioContainerState<T> extends State<RadioContainer> {
 
                     widget.onChanged.call(_selectedList);
                   },
-                  pressed: _selectedList.contains(e.value),
+                  // pressed: _selectedList.contains(e.value),
                   child: Text(e.label),
                 ),
               );

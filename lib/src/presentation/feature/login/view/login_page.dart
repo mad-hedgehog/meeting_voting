@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:meeting_voting/src/presentation/common/provider.dart';
-import 'package:meeting_voting/src/presentation/feature/login/provider/login_provider.dart';
-import 'package:pinput/pinput.dart';
+import 'package:meeting_voting/resources/resources.dart';
+import 'package:meeting_voting/src/core/text_system.dart';
+import 'package:meeting_voting/src/presentation/component/button/button.dart';
+import 'package:meeting_voting/src/presentation/component/mh_text_field.dart';
+import 'package:meeting_voting/src/presentation/feature/sign_up/view/sign_up_page.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -13,96 +16,69 @@ class LoginPage extends ConsumerStatefulWidget {
 }
 
 class _LoginPageState extends ConsumerState<LoginPage> {
-  String? _selectedId;
-  final FocusNode _focusNode = FocusNode();
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            constraints: const BoxConstraints(maxWidth: 640),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+            child: ListView(
               children: [
-                Consumer(
-                  builder: (context, ref, _) {
-                    final users = ref.watch(usersProvider);
-
-                    return switch (users) {
-                      AsyncData(:final value) => Wrap(
-                          spacing: 32,
-                          runSpacing: 16,
-                          children: [
-                            ...value.map(
-                              (user) => GestureDetector(
-                                onTap: () {
-                                  _controller.clear();
-                                  setState(() {
-                                    if (_selectedId == user.id) {
-                                      _selectedId = null;
-                                      _focusNode.unfocus();
-                                    } else {
-                                      _selectedId = user.id;
-                                      _focusNode.requestFocus();
-                                    }
-                                  });
-                                },
-                                child: Column(
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 32,
-                                      backgroundColor: _selectedId == user.id ? Colors.grey[900] : Colors.grey[300],
-                                      child: Text(user.name[0], style: TextStyle(fontSize: 20, color: _selectedId == user.id ? Colors.white : Colors.black)),
-                                    ),
-                                    Text(user.name),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
+                Image.asset(Images.loginImage, fit: BoxFit.cover),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                  child: Column(
+                    children: [
+                      const Gap(40),
+                      Text('JAKSIM', style: textSystem.heading.h1),
+                      const Gap(24),
+                      MHTextField(
+                        controller: _emailController,
+                        placeholder: '이메일을 입력해주세요.',
+                      ),
+                      const Gap(16),
+                      MHTextField(
+                        controller: _passwordController,
+                        placeholder: '비밀번호를 입력해주세요.',
+                        obscureText: true,
+                      ),
+                      const Gap(16),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Button.tertiary(
+                          textStyle: const TextStyle(fontWeight: FontWeight.w600),
+                          child: const Text('Forgot password?'),
+                          onTap: () {},
                         ),
-                      _ => const CircularProgressIndicator(),
-                    };
-                  },
-                ),
-                const SizedBox(height: 32),
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  height: _selectedId == null ? 0 : 56,
-                  curve: Curves.easeInOut,
-                  child: Pinput(
-                    length: 6,
-                    focusNode: _focusNode,
-                    controller: _controller,
-                    keyboardType: TextInputType.number,
-                    obscureText: true,
-                    obscuringCharacter: '*',
-                    onCompleted: (password) async {
-                      final userName = (await ref.read(usersProvider.future)).firstWhere((user) => user.id == _selectedId).userName;
-
-                      try {
-                        await ref.read(loginProvider(userName, password).future);
-                      } catch (e) {
-                        _controller.clear();
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: const Text('로그인에 실패했습니다. 다시 시도해주십시오.'),
-                              action: SnackBarAction(label: '확인', onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar()),
-                            ),
-                          );
-                        }
-                        _focusNode.requestFocus();
-                      }
-
-                      if (ref.read(pocketBaseProvider).authStore.isValid && context.mounted) {
-                        GoRouter.of(context).go('/vote');
-                      }
-                    },
+                      ),
+                      const Gap(24),
+                      Button.primary(
+                        expand: true,
+                        height: 48,
+                        child: const Text('로그인', style: TextStyle(color: Colors.white)),
+                        onTap: () {},
+                      ),
+                      const Gap(16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text('아직 회원이 아니신가요? ', style: TextStyle(color: Color(0xff71727a), fontWeight: FontWeight.w400)),
+                          Button.tertiary(
+                            textStyle: const TextStyle(fontWeight: FontWeight.w600),
+                            child: const Text('회원가입'),
+                            onTap: () => context.goNamed(SignUpPage.routeName),
+                          ),
+                        ],
+                      ),
+                      const Gap(24),
+                      const Divider(color: Color(0xffd4d6dd)),
+                      const Gap(64),
+                    ],
                   ),
                 ),
               ],

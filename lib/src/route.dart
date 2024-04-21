@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:meeting_voting/src/presentation/common/provider.dart';
 import 'package:meeting_voting/src/presentation/feature/login/view/login_page.dart';
 import 'package:meeting_voting/src/presentation/feature/main/view/main_page.dart';
+import 'package:meeting_voting/src/presentation/feature/sign_up/view/sign_up_page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'route.g.dart';
@@ -14,6 +15,8 @@ class Router extends _$Router {
     return GoRouter(
       initialLocation: '/login',
       redirect: (context, state) async {
+        if (state.fullPath == '/sign-up') return null;
+
         if (ref.read(isAuthProvider)) {
           return null;
         }
@@ -51,6 +54,17 @@ class Router extends _$Router {
               context: context,
               state: state,
               child: const LoginPage(),
+            );
+          },
+        ),
+        GoRoute(
+          path: '/sign-up',
+          name: SignUpPage.routeName,
+          pageBuilder: (context, state) {
+            return buildPageWithFadeTransition(
+              context: context,
+              state: state,
+              child: const SignUpPage(),
             );
           },
         ),

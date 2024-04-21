@@ -18,6 +18,7 @@ class MyApp extends ConsumerWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
+        fontFamily: 'Pretendard',
       ),
       routerConfig: ref.watch(routerProvider),
     );

@@ -1,23 +1,25 @@
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
+part of 'button.dart';
 
-class Button extends StatefulWidget {
-  const Button({
-    super.key,
-    this.pressed = false,
+class _ButtonSecondary extends StatefulWidget {
+  const _ButtonSecondary({
     required this.child,
+    this.expand = false,
     required this.onTap,
+    this.textStyle,
+    this.height,
   });
 
   final Widget child;
-  final bool pressed;
+  final bool expand;
   final void Function() onTap;
+  final TextStyle? textStyle;
+  final double? height;
 
   @override
-  State<Button> createState() => _ButtonState();
+  State<_ButtonSecondary> createState() => _ButtonSecondaryState();
 }
 
-class _ButtonState extends State<Button> {
+class _ButtonSecondaryState extends State<_ButtonSecondary> {
   MaterialState? _lastState;
   MaterialState? _state;
 
@@ -33,26 +35,22 @@ class _ButtonState extends State<Button> {
         onTapCancel: _pressedCancel,
         onTap: widget.onTap,
         child: Container(
-          padding: switch (widget.pressed) {
-            true => const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-            false => const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          },
+          height: widget.height ?? 40,
           decoration: BoxDecoration(
-            border: Border.all(
-              color: switch (widget.pressed) {
-                true => Colors.deepPurple.shade500,
-                false when _state == MaterialState.hovered => Colors.deepPurple.shade300,
-                false when _state == MaterialState.pressed => Colors.deepPurple.shade900,
-                _ => Colors.grey,
-              },
-              width: switch (widget.pressed) {
-                true => 2,
-                _ => 1,
-              },
-            ),
-            borderRadius: BorderRadius.circular(4),
+            color: colorSystem.highlight.lightest,
+            borderRadius: BorderRadius.circular(12),
           ),
-          child: widget.child,
+          alignment: widget.expand ? Alignment.center : null,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: DefaultTextStyle(
+            style: textSystem.action.m.copyWith(
+              fontSize: widget.textStyle?.fontSize,
+              fontWeight: widget.textStyle?.fontWeight,
+              height: widget.textStyle?.height,
+              color: widget.textStyle?.color ?? colorSystem.highlight.darkest,
+            ),
+            child: widget.child,
+          ),
         ),
       ),
     );

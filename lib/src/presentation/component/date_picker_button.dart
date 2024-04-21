@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:meeting_voting/src/presentation/component/button.dart';
+import 'package:meeting_voting/src/presentation/component/button/button.dart';
 import 'package:widget_tooltip/widget_tooltip.dart';
 
 class DatePickerButton extends StatefulWidget {
@@ -50,7 +50,7 @@ class _DatePickerButtonState extends State<DatePickerButton> {
           onDateChanged: widget.onChanged,
         ),
       ),
-      child: Button(
+      child: Button.primary(
         onTap: _tooltipController.toggle,
         child: Text(
           DateFormat('MMM dd, yyyy').format(widget.dateTime),

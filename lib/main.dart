@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meeting_voting/src/core/color_system.dart';
+import 'package:meeting_voting/src/core/text_system.dart';
 import 'package:meeting_voting/src/route.dart';
 
 void main() {
@@ -21,6 +23,12 @@ class MyApp extends ConsumerWidget {
         fontFamily: 'Pretendard',
       ),
       routerConfig: ref.watch(routerProvider),
+      builder: (context, child) {
+        ColorSystem.init(context);
+        TextSystem.init(context);
+
+        return child!;
+      },
     );
   }
 }

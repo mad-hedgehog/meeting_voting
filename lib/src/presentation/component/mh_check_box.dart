@@ -63,14 +63,14 @@ class MHCheckBox extends FormField<bool> {
           borderRadius: BorderRadius.circular(4),
           border: Border.all(
             color: switch (checked) {
-              true => colorSystem.highlight.darkest,
-              false when state.hasError => colorSystem.support.error.medium,
-              _ => colorSystem.neutral.light.darkest,
+              true => ColorSystem.highlight.darkest,
+              false when state.hasError => ColorSystem.support.error.medium,
+              _ => ColorSystem.neutral.light.darkest,
             },
             width: 1.5,
           ),
           color: switch (checked) {
-            true => colorSystem.highlight.darkest,
+            true => ColorSystem.highlight.darkest,
             _ => Colors.white,
           },
         ),

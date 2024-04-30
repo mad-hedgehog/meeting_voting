@@ -1,36 +1,49 @@
-import 'package:flutter/painting.dart';
+import 'package:flutter/material.dart';
 
-final textSystem = TextSystem();
+abstract class TextSystem {
+  TextSystem._();
 
-class TextSystem {
-  final heading = _Heading();
-  final body = _Body();
-  final action = _Action();
-  final caption = _Caption();
+  static late BuildContext _context;
+
+  // 초기화 메서드
+  static void init(BuildContext context) => _context = context;
+
+  static get heading => _Heading;
+  static get body => _Body;
+  static get action => _Action;
+  static get caption => _Caption;
 }
 
-class _Heading {
-  final h1 = const TextStyle(fontSize: 24, fontWeight: FontWeight.w900);
-  final h2 = const TextStyle(fontSize: 18, fontWeight: FontWeight.w900);
-  final h3 = const TextStyle(fontSize: 16, fontWeight: FontWeight.w900);
-  final h4 = const TextStyle(fontSize: 14, fontWeight: FontWeight.w800);
-  final h5 = const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
+abstract class _Heading {
+  _Heading._();
+
+  static get h1 => const TextStyle(fontSize: 24, fontWeight: FontWeight.w900);
+  static get h2 => const TextStyle(fontSize: 18, fontWeight: FontWeight.w900);
+  static get h3 => const TextStyle(fontSize: 16, fontWeight: FontWeight.w900);
+  static get h4 => const TextStyle(fontSize: 14, fontWeight: FontWeight.w800);
+  static get h5 => const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
 }
 
-class _Body {
-  final xl = const TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
-  final l = const TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
-  final m = const TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
-  final s = const TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
-  final xs = const TextStyle(fontSize: 10, fontWeight: FontWeight.w500);
+abstract class _Body {
+  _Body._();
+
+  static get xl => const TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
+  static get l => const TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
+  static get m => const TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
+  static get s => const TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
+  static get xs => const TextStyle(fontSize: 10, fontWeight: FontWeight.w500);
 }
 
-class _Action {
-  final l = const TextStyle(fontSize: 14, fontWeight: FontWeight.w600);
-  final m = const TextStyle(fontSize: 12, fontWeight: FontWeight.w600);
-  final s = const TextStyle(fontSize: 10, fontWeight: FontWeight.w600);
+abstract class _Action {
+  _Action._();
+
+  static get l => const TextStyle(fontSize: 14, fontWeight: FontWeight.w600);
+  static get m => const TextStyle(fontSize: 12, fontWeight: FontWeight.w600);
+  static get s => const TextStyle(fontSize: 10, fontWeight: FontWeight.w600);
 }
 
-class _Caption {
-  final m = const TextStyle(fontSize: 10, fontWeight: FontWeight.w600);
+abstract class _Caption {
+  _Caption._();
+
+  static get m => const TextStyle(fontSize: 10, fontWeight: FontWeight.w600);
 }

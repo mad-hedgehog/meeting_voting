@@ -37,17 +37,17 @@ class _ButtonSecondaryState extends State<_ButtonSecondary> {
         child: Container(
           height: widget.height ?? 40,
           decoration: BoxDecoration(
-            color: colorSystem.highlight.lightest,
+            color: ColorSystem.highlight.lightest,
             borderRadius: BorderRadius.circular(12),
           ),
           alignment: widget.expand ? Alignment.center : null,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: DefaultTextStyle(
-            style: textSystem.action.m.copyWith(
+            style: TextSystem.action.m.copyWith(
               fontSize: widget.textStyle?.fontSize,
               fontWeight: widget.textStyle?.fontWeight,
               height: widget.textStyle?.height,
-              color: widget.textStyle?.color ?? colorSystem.highlight.darkest,
+              color: widget.textStyle?.color ?? ColorSystem.highlight.darkest,
             ),
             child: widget.child,
           ),

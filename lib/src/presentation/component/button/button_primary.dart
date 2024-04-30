@@ -37,17 +37,17 @@ class _ButtonPrimaryState extends State<_ButtonPrimary> {
         child: Container(
           height: widget.height ?? 40,
           decoration: BoxDecoration(
-            color: colorSystem.highlight.darkest,
+            color: ColorSystem.highlight.darkest,
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 16),
           alignment: widget.expand ? Alignment.center : null,
           child: DefaultTextStyle(
-            style: textSystem.action.m.copyWith(
+            style: TextSystem.action.m.copyWith(
               fontSize: widget.textStyle?.fontSize,
               fontWeight: widget.textStyle?.fontWeight,
               height: widget.textStyle?.height,
-              color: widget.textStyle?.color ?? colorSystem.neutral.light.lightest,
+              color: widget.textStyle?.color ?? ColorSystem.neutral.light.lightest,
             ),
             child: widget.child,
           ),

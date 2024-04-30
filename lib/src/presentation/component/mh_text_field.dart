@@ -88,7 +88,7 @@ class _MHTextFieldState extends State<MHTextField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.title != null) ...[
-          Text(widget.title!, style: textSystem.heading.h5),
+          Text(widget.title!, style: TextSystem.heading.h5),
           const Gap(8),
         ],
         TextFormField(
@@ -97,25 +97,25 @@ class _MHTextFieldState extends State<MHTextField> {
           focusNode: _focusNode,
           obscureText: widget.obscureText && visibleIcon == false,
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          style: textSystem.body.m.copyWith(fontWeight: FontWeight.w500),
+          style: TextSystem.body.m.copyWith(fontWeight: FontWeight.w500),
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: colorSystem.highlight.lightest),
+              borderSide: BorderSide(color: ColorSystem.highlight.lightest),
               borderRadius: const BorderRadius.all(Radius.circular(12)),
             ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(color: colorSystem.highlight.darkest),
+              borderSide: BorderSide(color: ColorSystem.highlight.darkest),
               borderRadius: const BorderRadius.all(Radius.circular(12)),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: colorSystem.highlight.darkest, width: 1.5),
+              borderSide: BorderSide(color: ColorSystem.highlight.darkest, width: 1.5),
               borderRadius: const BorderRadius.all(Radius.circular(12)),
             ),
             errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: colorSystem.support.error.medium),
+              borderSide: BorderSide(color: ColorSystem.support.error.medium),
               borderRadius: const BorderRadius.all(Radius.circular(12)),
             ),
-            focusColor: colorSystem.highlight.lightest,
+            focusColor: ColorSystem.highlight.lightest,
             filled: true,
             fillColor: switch (_state) {
               _TextFieldState.idle => const Color(0xfff0f5eb),
@@ -133,7 +133,7 @@ class _MHTextFieldState extends State<MHTextField> {
                       padding: const EdgeInsets.only(right: 18.0),
                       child: SvgPicture.asset(
                         visibleIcon ? Svgs.eyeVisible : Svgs.eyeInvisible,
-                        colorFilter: ColorFilter.mode(colorSystem.highlight.medium, BlendMode.srcIn),
+                        colorFilter: ColorFilter.mode(ColorSystem.highlight.medium, BlendMode.srcIn),
                       ),
                     ),
                   ),
@@ -142,7 +142,7 @@ class _MHTextFieldState extends State<MHTextField> {
             suffixIconConstraints: const BoxConstraints(maxHeight: 20, maxWidth: 38),
             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             hintText: widget.placeholder,
-            hintStyle: textSystem.body.m.copyWith(color: colorSystem.neutral.dark.lightest),
+            hintStyle: TextSystem.body.m.copyWith(color: ColorSystem.neutral.dark.lightest),
           ),
           validator: widget.validator,
         ),

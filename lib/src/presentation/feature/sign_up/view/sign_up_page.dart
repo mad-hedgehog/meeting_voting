@@ -57,9 +57,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('회원가입', style: textSystem.heading.h3.copyWith(fontWeight: FontWeight.w700)),
+                          Text('회원가입', style: TextSystem.heading.h3.copyWith(fontWeight: FontWeight.w700)),
                           const Gap(8),
-                          Text('기본 정보를 입력해주세요.', style: textSystem.body.s.copyWith(color: colorSystem.neutral.dark.light)),
+                          Text('기본 정보를 입력해주세요.', style: TextSystem.body.s.copyWith(color: ColorSystem.neutral.dark.light)),
                           const Gap(24),
                           MHTextField(
                             controller: _nicknameController,
@@ -136,18 +136,18 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           Flexible(
                             child: RichText(
                               text: TextSpan(
-                                style: textSystem.body.s.copyWith(color: colorSystem.neutral.dark.light),
+                                style: TextSystem.body.s.copyWith(color: ColorSystem.neutral.dark.light),
                                 children: [
                                   const TextSpan(text: 'I\'ve read and agree with the '),
                                   TextSpan(
                                     text: 'Terms and Conditions',
-                                    style: textSystem.action.m.copyWith(color: colorSystem.highlight.darkest),
+                                    style: TextSystem.action.m.copyWith(color: ColorSystem.highlight.darkest),
                                     recognizer: TapGestureRecognizer()..onTap = () {},
                                   ),
                                   const TextSpan(text: ' and the '),
                                   TextSpan(
                                     text: 'Privacy Policy',
-                                    style: textSystem.action.m.copyWith(color: colorSystem.highlight.darkest),
+                                    style: TextSystem.action.m.copyWith(color: ColorSystem.highlight.darkest),
                                     recognizer: TapGestureRecognizer()..onTap = () {},
                                   ),
                                   const TextSpan(text: '.'),

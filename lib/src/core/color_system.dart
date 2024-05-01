@@ -1,140 +1,111 @@
 import 'package:flutter/material.dart';
 
-abstract class ColorSystem {
-  ColorSystem._();
+class ColorSystem {
+  ColorSystem.of(this.context);
+  final BuildContext context;
 
-  static late BuildContext _context;
-
-  // 초기화 메서드
-  static void init(BuildContext context) {
-    _context = context;
-
-    _Highlight.init(_context);
-    _Neutral.init(_context);
-    _Support.init(_context);
-  }
-
-  static get highlight => _Highlight;
-  static get neutral => _Neutral;
-  static get support => _Support;
+  final highLight = _HighLight();
+  final neutral = _Neutral();
+  final support = _Support();
 }
 
-abstract class _Highlight {
-  _Highlight._();
+class _HighLight {
+  _HighLight._();
 
-  static late BuildContext _context;
+  static final _HighLight _instance = _HighLight._();
 
-  // 초기화 메서드
-  static void init(BuildContext context) => _context = context;
+  factory _HighLight() => _instance;
 
-  static get darkest => MediaQuery.of(_context).platformBrightness == Brightness.light ? const Color(0xff003d84) : const Color(0xff003d84);
-  static get dark => const Color(0xff33639c);
-  static get medium => const Color(0xff668ab5);
-  static get light => const Color(0xff99B1CE);
-  static get lightest => const Color(0xffCCD8E6);
+  final Color darkest = const Color(0xff003d84);
+  final Color dark = const Color(0xff33639c);
+  final Color medium = const Color(0xff668ab5);
+  final Color light = const Color(0xff99B1CE);
+  final Color lightest = const Color(0xffCCD8E6);
 }
 
-abstract class _Neutral {
+class _Neutral {
   _Neutral._();
 
-  static late BuildContext _context;
+  static final _Neutral _instance = _Neutral._();
 
-  // 초기화 메서드
-  static void init(BuildContext context) {
-    _context = context;
+  factory _Neutral() => _instance;
 
-    _NeutralLight.init(context);
-    _NeutralDark.init(context);
-  }
-
-  static get light => _NeutralLight;
-  static get dark => _NeutralDark;
+  final light = _NeutralLight();
+  final dark = _NeutralDark();
 }
 
-abstract class _NeutralLight {
+class _NeutralLight {
   _NeutralLight._();
 
-  static late BuildContext _context;
+  static final _NeutralLight _instance = _NeutralLight._();
 
-  // 초기화 메서드
-  static void init(BuildContext context) => _context = context;
+  factory _NeutralLight() => _instance;
 
-  static get darkest => const Color(0xffc5c6cc);
-  static get dark => const Color(0xffd4d6dd);
-  static get medium => const Color(0xffe8e9f1);
-  static get light => const Color(0xfff8f9ff);
-  static get lightest => const Color(0xffffffff);
+  final Color darkest = const Color(0xffc5c6cc);
+  final Color dark = const Color(0xffd4d6dd);
+  final Color medium = const Color(0xffe8e9f1);
+  final Color light = const Color(0xfff8f9ff);
+  final Color lightest = const Color(0xffffffff);
 }
 
-abstract class _NeutralDark {
+class _NeutralDark {
   _NeutralDark._();
 
-  static late BuildContext _context;
+  static final _NeutralDark _instance = _NeutralDark._();
 
-  // 초기화 메서드
-  static void init(BuildContext context) => _context = context;
+  factory _NeutralDark() => _instance;
 
-  static get darkest => const Color(0xff1f2024);
-  static get dark => const Color(0xff2f3036);
-  static get medium => const Color(0xff494a50);
-  static get light => const Color(0xff71727a);
-  static get lightest => const Color(0xff8f9098);
+  final Color darkest = const Color(0xff1f2024);
+  final Color dark = const Color(0xff2f3036);
+  final Color medium = const Color(0xff494a50);
+  final Color light = const Color(0xff71727a);
+  final Color lightest = const Color(0xff8f9098);
 }
 
-abstract class _Support {
+class _Support {
   _Support._();
 
-  static late BuildContext _context;
+  static final _Support _instance = _Support._();
 
-  // 초기화 메서드
-  static void init(BuildContext context) {
-    _context = context;
+  factory _Support() => _instance;
 
-    _SupportSuccess.init(context);
-    _SupportWarning.init(context);
-    _SupportError.init(context);
-  }
-
-  static get success => _SupportSuccess;
-  static get warning => _SupportWarning;
-  static get error => _SupportError;
+  final success = _SupportSuccess();
+  final warning = _SupportWarning();
+  final error = _SupportError();
 }
 
-abstract class _SupportSuccess {
+class _SupportSuccess {
   _SupportSuccess._();
 
-  static late BuildContext _context;
+  static final _SupportSuccess _instance = _SupportSuccess._();
 
-  // 초기화 메서드
-  static void init(BuildContext context) => _context = context;
+  factory _SupportSuccess() => _instance;
 
-  static get dark => const Color(0xff298267);
-  static get medium => const Color(0xff3ac0a0);
-  static get light => const Color(0xffe7f4e8);
+  final Color dark = const Color(0xff298267);
+  final Color medium = const Color(0xff3ac0a0);
+  final Color light = const Color(0xffe7f4e8);
 }
 
-abstract class _SupportWarning {
+class _SupportWarning {
   _SupportWarning._();
 
-  static late BuildContext _context;
+  static final _SupportWarning _instance = _SupportWarning._();
 
-  // 초기화 메서드
-  static void init(BuildContext context) => _context = context;
+  factory _SupportWarning() => _instance;
 
-  static get dark => const Color(0xffe86339);
-  static get medium => const Color(0xffffb37c);
-  static get light => const Color(0xfffff4e4);
+  final Color dark = const Color(0xffe86339);
+  final Color medium = const Color(0xffffb37c);
+  final Color light = const Color(0xfffff4e4);
 }
 
-abstract class _SupportError {
+class _SupportError {
   _SupportError._();
 
-  static late BuildContext _context;
+  static final _SupportError _instance = _SupportError._();
 
-  // 초기화 메서드
-  static void init(BuildContext context) => _context = context;
+  factory _SupportError() => _instance;
 
-  static get dark => const Color(0xffed3241);
-  static get medium => const Color(0xffff616d);
-  static get light => const Color(0xffffe2e5);
+  final Color dark = const Color(0xffed3241);
+  final Color medium = const Color(0xffff616d);
+  final Color light = const Color(0xffffe2e5);
 }

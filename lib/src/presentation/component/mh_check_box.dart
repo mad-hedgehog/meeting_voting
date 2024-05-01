@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:meeting_voting/resources/resources.dart';
 import 'package:meeting_voting/src/core/color_system.dart';
+import 'package:meeting_voting/src/core/extension/context_extension.dart';
 
 class MHCheckBox extends FormField<bool> {
   MHCheckBox.small({
@@ -63,14 +64,14 @@ class MHCheckBox extends FormField<bool> {
           borderRadius: BorderRadius.circular(4),
           border: Border.all(
             color: switch (checked) {
-              true => ColorSystem.highlight.darkest,
-              false when state.hasError => ColorSystem.support.error.medium,
-              _ => ColorSystem.neutral.light.darkest,
+              true => state.context.colorSystem.highLight.darkest,
+              false when state.hasError => state.context.colorSystem.support.error.medium,
+              _ => state.context.colorSystem.neutral.light.darkest,
             },
             width: 1.5,
           ),
           color: switch (checked) {
-            true => ColorSystem.highlight.darkest,
+            true => state.context.colorSystem.highLight.darkest,
             _ => Colors.white,
           },
         ),

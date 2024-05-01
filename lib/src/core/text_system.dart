@@ -1,49 +1,62 @@
 import 'package:flutter/material.dart';
 
-abstract class TextSystem {
-  TextSystem._();
+class TextSystem {
+  TextSystem.of(this.context);
 
-  static late BuildContext _context;
+  final BuildContext context;
 
-  // 초기화 메서드
-  static void init(BuildContext context) => _context = context;
-
-  static get heading => _Heading;
-  static get body => _Body;
-  static get action => _Action;
-  static get caption => _Caption;
+  final heading = _Heading();
+  final body = _Body();
+  final action = _Action();
+  final caption = _Caption();
 }
 
-abstract class _Heading {
+class _Heading {
   _Heading._();
 
-  static get h1 => const TextStyle(fontSize: 24, fontWeight: FontWeight.w900);
-  static get h2 => const TextStyle(fontSize: 18, fontWeight: FontWeight.w900);
-  static get h3 => const TextStyle(fontSize: 16, fontWeight: FontWeight.w900);
-  static get h4 => const TextStyle(fontSize: 14, fontWeight: FontWeight.w800);
-  static get h5 => const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
+  static final _Heading _instance = _Heading._();
+
+  factory _Heading() => _instance;
+
+  final TextStyle h1 = const TextStyle(fontSize: 24, fontWeight: FontWeight.w900);
+  final TextStyle h2 = const TextStyle(fontSize: 18, fontWeight: FontWeight.w900);
+  final TextStyle h3 = const TextStyle(fontSize: 16, fontWeight: FontWeight.w900);
+  final TextStyle h4 = const TextStyle(fontSize: 14, fontWeight: FontWeight.w800);
+  final TextStyle h5 = const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
 }
 
-abstract class _Body {
+class _Body {
   _Body._();
 
-  static get xl => const TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
-  static get l => const TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
-  static get m => const TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
-  static get s => const TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
-  static get xs => const TextStyle(fontSize: 10, fontWeight: FontWeight.w500);
+  static final _Body _instance = _Body._();
+
+  factory _Body() => _instance;
+
+  final TextStyle xl = const TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
+  final TextStyle l = const TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
+  final TextStyle m = const TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
+  final TextStyle s = const TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
+  final TextStyle xs = const TextStyle(fontSize: 10, fontWeight: FontWeight.w500);
 }
 
-abstract class _Action {
+class _Action {
   _Action._();
 
-  static get l => const TextStyle(fontSize: 14, fontWeight: FontWeight.w600);
-  static get m => const TextStyle(fontSize: 12, fontWeight: FontWeight.w600);
-  static get s => const TextStyle(fontSize: 10, fontWeight: FontWeight.w600);
+  static final _Action _instance = _Action._();
+
+  factory _Action() => _instance;
+
+  final TextStyle l = const TextStyle(fontSize: 14, fontWeight: FontWeight.w600);
+  final TextStyle m = const TextStyle(fontSize: 12, fontWeight: FontWeight.w600);
+  final TextStyle s = const TextStyle(fontSize: 10, fontWeight: FontWeight.w600);
 }
 
-abstract class _Caption {
+class _Caption {
   _Caption._();
 
-  static get m => const TextStyle(fontSize: 10, fontWeight: FontWeight.w600);
+  static final _Caption _instance = _Caption._();
+
+  factory _Caption() => _instance;
+
+  final TextStyle m = const TextStyle(fontSize: 10, fontWeight: FontWeight.w600);
 }

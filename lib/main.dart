@@ -23,12 +23,6 @@ class MyApp extends ConsumerWidget {
         fontFamily: 'Pretendard',
       ),
       routerConfig: ref.watch(routerProvider),
-      builder: (context, child) {
-        ColorSystem.init(context);
-        TextSystem.init(context);
-
-        return child!;
-      },
     );
   }
 }

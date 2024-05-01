@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meeting_voting/resources/resources.dart';
 import 'package:meeting_voting/src/core/color_system.dart';
+import 'package:meeting_voting/src/core/extension/context_extension.dart';
 import 'package:meeting_voting/src/core/text_system.dart';
 import 'package:meeting_voting/src/presentation/component/button/button.dart';
 import 'package:meeting_voting/src/presentation/component/mh_text_field.dart';
@@ -51,7 +52,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     child: Column(
                       children: [
                         const Gap(40),
-                        Text('JAKSIM', style: TextSystem.heading.h1),
+                        Text('JAKSIM', style: context.textSystem.heading.h1),
                         const Gap(24),
                         MHTextField(
                           controller: _emailController,
@@ -82,7 +83,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             text: TextSpan(children: [
                               TextSpan(
                                 text: 'Forgot password?',
-                                style: TextSystem.action.m.copyWith(color: ColorSystem.highlight.darkest),
+                                style: context.textSystem.action.m.copyWith(color: context.colorSystem.highLight.darkest),
                                 recognizer: TapGestureRecognizer()..onTap = () {},
                               ),
                             ]),
@@ -120,10 +121,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         const Gap(16),
                         RichText(
                           text: TextSpan(children: [
-                            TextSpan(text: '아직 회원이 아니신가요? ', style: TextSystem.body.s.copyWith(color: ColorSystem.neutral.dark.light)),
+                            TextSpan(text: '아직 회원이 아니신가요? ', style: context.textSystem.body.s.copyWith(color: context.colorSystem.neutral.dark.light)),
                             TextSpan(
                               text: '회원가입',
-                              style: TextSystem.action.m.copyWith(color: ColorSystem.highlight.darkest),
+                              style: context.textSystem.action.m.copyWith(color: context.colorSystem.highLight.darkest),
                               recognizer: TapGestureRecognizer()..onTap = () => context.goNamed(SignUpPage.routeName),
                             ),
                           ]),

@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:meeting_voting/resources/resources.dart';
 import 'package:meeting_voting/src/core/color_system.dart';
+import 'package:meeting_voting/src/core/extension/context_extension.dart';
 import 'package:meeting_voting/src/core/text_system.dart';
 
 enum _TextFieldState { idle, focused, filled, error, disabled }
@@ -88,7 +89,7 @@ class _MHTextFieldState extends State<MHTextField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.title != null) ...[
-          Text(widget.title!, style: TextSystem.heading.h5),
+          Text(widget.title!, style: context.textSystem.heading.h5),
           const Gap(8),
         ],
         TextFormField(
@@ -97,25 +98,25 @@ class _MHTextFieldState extends State<MHTextField> {
           focusNode: _focusNode,
           obscureText: widget.obscureText && visibleIcon == false,
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          style: TextSystem.body.m.copyWith(fontWeight: FontWeight.w500),
+          style: context.textSystem.body.m,
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: ColorSystem.highlight.lightest),
+              borderSide: BorderSide(color: context.colorSystem.highLight.lightest),
               borderRadius: const BorderRadius.all(Radius.circular(12)),
             ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(color: ColorSystem.highlight.darkest),
+              borderSide: BorderSide(color: context.colorSystem.highLight.darkest),
               borderRadius: const BorderRadius.all(Radius.circular(12)),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: ColorSystem.highlight.darkest, width: 1.5),
+              borderSide: BorderSide(color: context.colorSystem.highLight.darkest, width: 1.5),
               borderRadius: const BorderRadius.all(Radius.circular(12)),
             ),
             errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: ColorSystem.support.error.medium),
+              borderSide: BorderSide(color: context.colorSystem.support.error.medium),
               borderRadius: const BorderRadius.all(Radius.circular(12)),
             ),
-            focusColor: ColorSystem.highlight.lightest,
+            focusColor: context.colorSystem.highLight.lightest,
             filled: true,
             fillColor: switch (_state) {
               _TextFieldState.idle => const Color(0xfff0f5eb),
@@ -133,7 +134,7 @@ class _MHTextFieldState extends State<MHTextField> {
                       padding: const EdgeInsets.only(right: 18.0),
                       child: SvgPicture.asset(
                         visibleIcon ? Svgs.eyeVisible : Svgs.eyeInvisible,
-                        colorFilter: ColorFilter.mode(ColorSystem.highlight.medium, BlendMode.srcIn),
+                        colorFilter: ColorFilter.mode(context.colorSystem.highLight.medium, BlendMode.srcIn),
                       ),
                     ),
                   ),
@@ -142,7 +143,7 @@ class _MHTextFieldState extends State<MHTextField> {
             suffixIconConstraints: const BoxConstraints(maxHeight: 20, maxWidth: 38),
             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             hintText: widget.placeholder,
-            hintStyle: TextSystem.body.m.copyWith(color: ColorSystem.neutral.dark.lightest),
+            hintStyle: context.textSystem.body.m.copyWith(color: context.colorSystem.neutral.dark.lightest),
           ),
           validator: widget.validator,
         ),

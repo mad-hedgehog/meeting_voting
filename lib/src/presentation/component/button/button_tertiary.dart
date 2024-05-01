@@ -33,11 +33,11 @@ class _ButtonTertiaryState extends State<_ButtonTertiary> {
         onTapCancel: _pressedCancel,
         onTap: widget.onTap,
         child: DefaultTextStyle(
-          style: TextSystem.action.m.copyWith(
+          style: context.textSystem.action.m.copyWith(
             fontSize: widget.textStyle?.fontSize,
             fontWeight: widget.textStyle?.fontWeight,
             height: widget.textStyle?.height,
-            color: widget.textStyle?.color ?? ColorSystem.highlight.darkest,
+            color: widget.textStyle?.color ?? context.colorSystem.highLight.darkest,
           ),
           child: widget.child,
         ),

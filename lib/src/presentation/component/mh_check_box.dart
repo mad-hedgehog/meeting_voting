@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:meeting_voting/resources/resources.dart';
-import 'package:meeting_voting/src/core/color_system.dart';
 import 'package:meeting_voting/src/core/extension/context_extension.dart';
 
 class MHCheckBox extends FormField<bool> {

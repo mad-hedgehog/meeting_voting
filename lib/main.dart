@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meeting_voting/src/core/color_system.dart';
-import 'package:meeting_voting/src/core/text_system.dart';
 import 'package:meeting_voting/src/route.dart';
 
 void main() {

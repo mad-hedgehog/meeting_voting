@@ -26,7 +26,7 @@ Future<bool> login(LoginRef ref, String email, String password) async {
     ref.read(writeTokenProvider(pb.authStore.token));
 
     return true;
-  } on ClientException catch (e) {
+  } on ClientException {
     return false;
   }
 }
